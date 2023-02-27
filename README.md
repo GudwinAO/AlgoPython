@@ -1,2 +1,2 @@
-# AlgoPython
-Репозиторий проекта по алгоритмам проектирования Python
+For start application use command:
+uwsgi --http :8000 --wsgi-file run.py
