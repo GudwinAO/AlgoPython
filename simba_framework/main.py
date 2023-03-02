@@ -1,5 +1,5 @@
 from quopri import decodestring
-from request import GetRequests, PostRequests
+from requests import GetRequests, PostRequests
 
 
 class PageNotFound404:
