@@ -1,4 +1,4 @@
-from quopri import decodestring
+import quopri 
 from simba_framework.requests import GetRequests, PostRequests
 
 
@@ -33,7 +33,6 @@ class Framework:
             data = PostRequests().get_request_params(environ)
             request['data'] = Framework.decode_value(data)
             print(f'Нам пришёл post-запрос: {Framework.decode_value(data)}')
-
         if method == 'GET':
             request_params = GetRequests().get_request_params(environ)
             request['request_params'] = Framework.decode_value(request_params)
@@ -53,6 +52,7 @@ class Framework:
         for front in self.fronts_lst:
             front(request)
         # запуск контроллера с передачей объекта request
+
         code, body = view(request)
         start_response(code, [('Content-Type', 'text/html')])
         return [body.encode('utf-8')]
@@ -62,11 +62,11 @@ class Framework:
         new_data = {}
         for k, v in data.items():
             val = bytes(v.replace('%', '=').replace("+", " "), 'UTF-8')
-            val_decode_str = decodestring(val).decode('UTF-8')
+            val_decode_str = quopri.decodestring(val).decode('UTF-8')
             new_data[k] = val_decode_str
         return new_data
 
-        
+
 # Новый вид WSGI-application.
 # Первый — логирующий (такой же, как основной,
 # только для каждого запроса выводит информацию
